@@ -40,7 +40,8 @@ class Student:
 
 # rate lecturer
     def rate_lc(self, lecturer, course, rate):
-        if isinstance(lecturer, Lecturer) and course in lecturer.courses_attached and course in self.courses_in_progress or course in self.finished_courses:
+        if (isinstance(lecturer, Lecturer) and course in lecturer.courses_attached and
+            course in self.courses_in_progress or course in self.finished_courses):
             if course in lecturer.rate:
                 lecturer.rate[course] += [rate]
             else:
@@ -75,7 +76,8 @@ class Lecturer(Mentor):
             return "Нет оценок"
 
     def __str__(self):
-       return f"Имя: {self.name} \nФамилия: {self.surname} \nСредняя оценка за лекции: {self.calc_rate(self.rate)}"
+       return (f"Имя: {self.name} \nФамилия: {self.surname}\n"
+               f"Средняя оценка за лекции:{self.calc_rate(self.rate)}")
 
 # comparison functions for lecturer's average rate
     def __eq__(self, other_rate):
@@ -102,13 +104,15 @@ class Reviewer(Mentor):
         return f"Имя: {self.name} \nФамилия: {self.surname} "
 
     def rate_hw(self, student, course, grade):
-        if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
+        if (isinstance(student, Student) and course in self.courses_attached and
+            course in student.courses_in_progress):
             if course in student.grades:
                 student.grades[course] += [grade]
             else:
                 student.grades[course] = [grade]
         else:
             print('!!!Ошибка, несоответствие курсов!!!')
+
 
 # functions
 def course_grade(student_list, course_name):
@@ -122,6 +126,7 @@ def course_grade(student_list, course_name):
             return grades / counter
         else:
             return 0
+
 
 def course_rating(lecturers_list, course_name):
     rating = 0
@@ -165,6 +170,7 @@ print(lecturer1, '\n', lecturer2, sep='')
 print()
 print(reviewer1,  '\n', reviewer2, sep='')
 print()
+# test functions
 print(lecturer1 < lecturer2)
 print(course_grade([student1, student2], 'Python'))
 print(course_rating([lecturer1, lecturer2], 'Python'))
